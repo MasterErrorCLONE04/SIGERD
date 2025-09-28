@@ -13,6 +13,9 @@
                     <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
                         <div class="flex items-center space-x-4">
                             <div class="p-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl shadow-lg">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                                </svg>
                             </div>
                             <div>
                                 <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Usuarios del Sistema</h3>
@@ -85,9 +88,15 @@
                                     <td class="px-8 py-6">
                                         <div class="flex items-center space-x-4">
                                             <div class="relative">
-                                                <div class="h-14 w-14 rounded-2xl bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-lg shadow-lg ring-4 ring-white/50 dark:ring-gray-700/50 group-hover:scale-110 transition-transform duration-200">
-                                                    {{ strtoupper(substr($user->name, 0, 2)) }}
-                                                </div>
+                                                @if($user->profile_photo)
+                                                    <img src="{{ $user->profile_photo_url }}" 
+                                                         alt="{{ $user->name }}"
+                                                         class="h-14 w-14 rounded-2xl object-cover shadow-lg ring-4 ring-white/50 dark:ring-gray-700/50 group-hover:scale-110 transition-transform duration-200">
+                                                @else
+                                                    <div class="h-14 w-14 rounded-2xl bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-lg shadow-lg ring-4 ring-white/50 dark:ring-gray-700/50 group-hover:scale-110 transition-transform duration-200">
+                                                        {{ $user->initials }}
+                                                    </div>
+                                                @endif
                                                 <div class="absolute -bottom-1 -right-1 h-5 w-5 bg-green-400 border-2 border-white dark:border-gray-800 rounded-full shadow-sm"></div>
                                             </div>
                                             <div>
@@ -149,13 +158,14 @@
                                     <td class="px-8 py-6">
                                         <div class="flex items-center justify-end space-x-3">
                                             <!-- Botón Ver -->
-                                            <button class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 bg-gray-100/80 hover:bg-gray-200/80 dark:bg-gray-700/50 dark:hover:bg-gray-600/50 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md transform hover:scale-105">
+                                            <a href="{{ route('admin.users.show', $user->id) }}"
+                                                class="inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 bg-gray-100/80 hover:bg-gray-200/80 dark:bg-gray-700/50 dark:hover:bg-gray-600/50 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md transform hover:scale-105">
                                                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                                                 </svg>
                                                 Ver
-                                            </button>
+                                            </a>
                                             
                                             <!-- Botón Editar -->
                                             <a href="{{ route('admin.users.edit', $user->id) }}" 

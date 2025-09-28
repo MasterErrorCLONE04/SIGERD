@@ -22,7 +22,77 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'profile_photo',
     ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['profile_photo_url', 'initials'];
+
+    /**
+     * Get the user's profile photo URL.
+     */
+    public function getProfilePhotoUrlAttribute()
+    {
+        if ($this->profile_photo && file_exists(storage_path('app/public/' . $this->profile_photo))) {
+            return asset('storage/' . $this->profile_photo);
+        }
+        
+        // Retornar una imagen por defecto si no tiene foto
+        return $this->generateAvatarUrl();
+    }
+
+    /**
+     * Get the user's initials for avatar fallback.
+     */
+    public function getInitialsAttribute()
+    {
+        $names = explode(' ', trim($this->name));
+        $initials = '';
+        
+        foreach ($names as $name) {
+            if (!empty($name)) {
+                $initials .= strtoupper(substr($name, 0, 1));
+            }
+        }
+        
+        return substr($initials, 0, 2) ?: 'U';
+    }
+
+    /**
+     * Generate a default avatar URL using a service like UI Avatars
+     */
+    private function generateAvatarUrl()
+    {
+        $name = urlencode($this->name);
+        $initials = urlencode($this->initials);
+        
+        // Usar UI Avatars como servicio de avatares por defecto
+        return "https://ui-avatars.com/api/?name={$initials}&color=ffffff&background=6366f1&size=200&font-size=0.5";
+    }
+
+    /**
+     * Check if user has a profile photo
+     */
+    public function hasProfilePhoto()
+    {
+        return !empty($this->profile_photo) && file_exists(storage_path('app/public/' . $this->profile_photo));
+    }
+
+    /**
+     * Delete the user's profile photo
+     */
+    public function deleteProfilePhoto()
+    {
+        if ($this->profile_photo && file_exists(storage_path('app/public/' . $this->profile_photo))) {
+            unlink(storage_path('app/public/' . $this->profile_photo));
+            $this->update(['profile_photo' => null]);
+        }
+    }
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -61,4 +131,5 @@ class User extends Authenticatable
     {
         return $this->role === 'instructor';
     }
+
 }
