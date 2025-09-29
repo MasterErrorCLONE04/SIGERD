@@ -105,59 +105,6 @@
         </div>
     </section>
 
-    <!-- Pricing -->
-    <section id="pricing" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <h3 class="text-4xl font-bold text-gray-900 mb-12">Planes accesibles</h3>
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Básico -->
-                <div class="p-8 bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all">
-                    <h4 class="text-xl font-bold mb-4">Básico</h4>
-                    <p class="text-4xl font-extrabold text-indigo-600 mb-6">$0</p>
-                    <ul class="space-y-3 text-gray-600 mb-6 text-left">
-                        <li>✔ Registro de reportes</li>
-                        <li>✔ Gestión de tareas</li>
-                    </ul>
-                    <a href="{{ route('register') }}" 
-                       class="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg shadow hover:shadow-md hover:bg-indigo-700 transition-all block">
-                       Empezar
-                    </a>
-                </div>
-
-                <!-- Profesional -->
-                <div class="relative p-8 bg-white rounded-2xl shadow-xl ring-2 ring-indigo-500">
-                    <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-indigo-600 text-white text-xs font-semibold px-3 py-1 rounded-full">Recomendado</span>
-                    <h4 class="text-xl font-bold mb-4">Profesional</h4>
-                    <p class="text-4xl font-extrabold text-indigo-600 mb-6">$19<span class="text-lg font-medium text-gray-500">/mes</span></p>
-                    <ul class="space-y-3 text-gray-600 mb-6 text-left">
-                        <li>✔ Todo del Básico</li>
-                        <li>✔ Paneles avanzados</li>
-                        <li>✔ Exportación de reportes</li>
-                    </ul>
-                    <a href="{{ route('register') }}" 
-                       class="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg shadow hover:shadow-md hover:bg-indigo-700 transition-all block">
-                       Elegir
-                    </a>
-                </div>
-
-                <!-- Empresarial -->
-                <div class="p-8 bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all">
-                    <h4 class="text-xl font-bold mb-4">Empresarial</h4>
-                    <p class="text-4xl font-extrabold text-indigo-600 mb-6">$49<span class="text-lg font-medium text-gray-500">/mes</span></p>
-                    <ul class="space-y-3 text-gray-600 mb-6 text-left">
-                        <li>✔ Todo del Profesional</li>
-                        <li>✔ Integraciones avanzadas</li>
-                        <li>✔ Soporte dedicado</li>
-                    </ul>
-                    <a href="{{ route('register') }}" 
-                       class="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg shadow hover:shadow-md hover:bg-indigo-700 transition-all block">
-                       Elegir
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer id="contact" class="bg-gray-900 text-gray-300 py-12">
         <div class="max-w-7xl mx-auto px-6 text-center space-y-4">

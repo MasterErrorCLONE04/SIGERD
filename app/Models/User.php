@@ -132,4 +132,22 @@ class User extends Authenticatable
         return $this->role === 'instructor';
     }
 
+    // Tareas que tiene asignadas este usuario
+    public function assignedTasks()
+    {
+        return $this->hasMany(\App\Models\Task::class, 'assigned_to');
+    }
+
+    // Tareas que este usuario creó
+    public function createdTasks()
+    {
+        return $this->hasMany(\App\Models\Task::class, 'created_by');
+    }
+
+    // Incidentes que este usuario reportó
+    public function reportedIncidents()
+    {
+        return $this->hasMany(\App\Models\Incident::class, 'reported_by');
+    }
+
 }
