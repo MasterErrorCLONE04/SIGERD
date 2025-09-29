@@ -1,0 +1,36 @@
+# Configuración para Railway con PHP 8.3
+[phases.setup]
+nixPkgs = [
+  "php83",
+  "php83Extensions.mbstring",
+  "php83Extensions.pdo",
+  "php83Extensions.pdo_mysql",
+  "php83Extensions.tokenizer",
+  "php83Extensions.xml",
+  "php83Extensions.ctype",
+  "php83Extensions.curl",
+  "php83Extensions.dom",
+  "php83Extensions.fileinfo",
+  "php83Extensions.filter",
+  "php83Extensions.hash",
+  "php83Extensions.openssl",
+  "php83Extensions.pcre",
+  "php83Extensions.session",
+  "php83Extensions.zip",
+  "nodejs_20"
+]
+
+[phases.install]
+cmds = [
+  "php -v",
+  "composer update --no-dev --optimize-autoloader --no-interaction"
+]
+
+[phases.build]
+cmds = [
+  "npm ci",
+  "npm run build"
+]
+
+[start]
+cmd = "php artisan migrate --force && php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan serve --host=0.0.0.0 --port=$PORT"
