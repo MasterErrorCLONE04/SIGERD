@@ -1,15 +1,6 @@
 <x-app-layout>
 {{-- 1. Header ----------------------------------------------------}}
-<x-slot name="header">
-    <div class="flex items-center justify-between">
-        <div class="flex items-center gap-3">
-            <h2 class="text-2xl font-bold tracking-tight text-gray-800 dark:text-gray-100">
-                {{ __('Gestión de Incidentes') }}
-            </h2>
-        </div>
-        
-    </div>
-</x-slot>
+
 
 {{-- 2. Contenido -------------------------------------------------}}
 <div class="py-12">
