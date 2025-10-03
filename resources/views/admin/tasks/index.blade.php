@@ -9,25 +9,38 @@
         <div class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl
                     rounded-2xl shadow-lg border border-white/20 dark:border-gray-700/30
                     px-6 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 flex-1">
+            <form method="GET" action="{{ route('admin.tasks.index') }}" class="flex flex-col sm:flex-row gap-3 sm:gap-4 flex-1">
                 {{-- Buscador --}}
                 <input type="text"
+                       name="search"
                        placeholder="Buscar por título..."
+                       value="{{ request('search') }}"
                        class="w-full sm:w-80 rounded-lg bg-gray-50 dark:bg-gray-900
                               border-gray-300 dark:border-gray-600
                               text-gray-800 dark:text-gray-200
                               focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400">
                 {{-- Filtro prioridad --}}
-                <select class="rounded-lg bg-gray-50 dark:bg-gray-900
+                <select name="priority"
+                        class="rounded-lg bg-gray-50 dark:bg-gray-900
                                border-gray-300 dark:border-gray-600
                                text-gray-800 dark:text-gray-200
                                focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400">
                     <option value="">Todas las prioridades</option>
-                    <option>Alta</option>
-                    <option>Media</option>
-                    <option>Baja</option>
+                    <option value="alta" {{ request('priority') == 'alta' ? 'selected' : '' }}>Alta</option>
+                    <option value="media" {{ request('priority') == 'media' ? 'selected' : '' }}>Media</option>
+                    <option value="baja" {{ request('priority') == 'baja' ? 'selected' : '' }}>Baja</option>
                 </select>
-            </div>
+                <button type="submit"
+                        class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-white
+                               bg-indigo-500 hover:bg-indigo-600
+                               focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+                               dark:focus:ring-offset-gray-800 shadow-md hover:shadow-lg transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                    Buscar
+                </button>
+            </form>
             <a href="{{ route('admin.tasks.create') }}"
                class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-white
                       bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700

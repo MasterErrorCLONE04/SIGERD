@@ -17,9 +17,19 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::with(['assignedTo', 'createdBy'])->get();
+        $query = Task::with(['assignedTo', 'createdBy']);
+
+        if ($request->has('search') && !empty($request->search)) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->has('priority') && !empty($request->priority)) {
+            $query->where('priority', $request->priority);
+        }
+
+        $tasks = $query->get();
 
         return view('admin.tasks.index', compact('tasks'));
     }
