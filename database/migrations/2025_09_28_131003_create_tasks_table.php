@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->string('priority')->default('media'); // baja, media, alta
+            $table->timestamp('deadline_at'); // Campo para la fecha límite, obligatorio
+            $table->string('location'); // Campo para la ubicación, obligatorio
             $table->string('status')->default('pendiente'); // pendiente, en progreso, finalizada, cancelada
             $table->foreignId('assigned_to')->nullable()->constrained('users')->onDelete('set null');
             $table->foreignId('created_by')->constrained('users')->onDelete('cascade');

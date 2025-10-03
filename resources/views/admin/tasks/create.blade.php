@@ -26,6 +26,20 @@
                             <x-input-error :messages="$errors->get('description')" class="mt-2" />
                         </div>
 
+                        <!-- Deadline At -->
+                        <div class="mt-4">
+                            <x-input-label for="deadline_at" :value="__('Fecha Límite')" />
+                            <x-text-input id="deadline_at" class="block mt-1 w-full" type="date" name="deadline_at" :value="old('deadline_at')" required />
+                            <x-input-error :messages="$errors->get('deadline_at')" class="mt-2" />
+                        </div>
+
+                        <!-- Location -->
+                        <div class="mt-4">
+                            <x-input-label for="location" :value="__('Ubicación')" />
+                            <x-text-input id="location" class="block mt-1 w-full" type="text" name="location" :value="old('location')" required />
+                            <x-input-error :messages="$errors->get('location')" class="mt-2" />
+                        </div>
+
                         <!-- Priority -->
                         <div class="mt-4">
                             <x-input-label for="priority" :value="__('Prioridad')" />

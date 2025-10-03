@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -38,18 +43,28 @@ class TaskController extends Controller
         $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
+            'deadline_at' => ['required', 'date', 'after_or_equal:today'],
+            'location' => ['required', 'string', 'max:255'],
             'priority' => ['required', 'string', 'in:baja,media,alta'],
             'assigned_to' => ['nullable', 'exists:users,id'],
         ]);
 
-        Task::create([
+        $task = Task::create([
             'title' => $request->title,
             'description' => $request->description,
+            'deadline_at' => $request->deadline_at,
+            'location' => $request->location,
             'priority' => $request->priority,
             'status' => 'pendiente',
             'assigned_to' => $request->assigned_to,
             'created_by' => auth()->id(),
         ]);
+
+        // Lógica para cambiar el estado a "incompleta" si la fecha límite ha pasado al momento de la creación
+        if ($task->deadline_at < now()) {
+            $task->status = 'incompleta';
+            $task->save();
+        }
 
         return redirect()->route('admin.tasks.index')->with('success', 'Tarea creada exitosamente.');
     }
@@ -85,8 +100,10 @@ class TaskController extends Controller
         $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
+            'deadline_at' => ['required', 'date', 'after_or_equal:today'],
+            'location' => ['required', 'string', 'max:255'],
             'priority' => ['required', 'string', 'in:baja,media,alta'],
-            'status' => ['required', 'string', 'in:pendiente,en progreso,finalizada,cancelada'],
+            'status' => ['required', 'string', 'in:pendiente,en progreso,finalizada,cancelada,incompleta'],
             'assigned_to' => ['nullable', 'exists:users,id'],
         ]);
 
@@ -96,7 +113,15 @@ class TaskController extends Controller
             'priority' => $request->priority,
             'status' => $request->status,
             'assigned_to' => $request->assigned_to,
+            'deadline_at' => $request->deadline_at,
+            'location' => $request->location,
         ]);
+
+        // Lógica para cambiar el estado a "incompleta" si la fecha límite ha pasado
+        if ($task->deadline_at && $task->deadline_at < now() && $task->status !== 'finalizada' && $task->status !== 'cancelada') {
+            $task->status = 'incompleta';
+            $task->save();
+        }
 
         return redirect()->route('admin.tasks.index')->with('success', 'Tarea actualizada exitosamente.');
     }
